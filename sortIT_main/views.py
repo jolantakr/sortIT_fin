@@ -1,32 +1,28 @@
-from django.views import View
+from django.db.models import Q
 from django.http import JsonResponse
-from .models import Category
+from django.views import View
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from sortIT_main.models import Category, Type
+from sortIT_main.serializers import CategorySerializer, TypeSerializer
 
 
-class CategoryListView(View):
-    def get(self, request):
+class CategoryListView(APIView):
+    def get(self, request, *args, **kwargs):
         categories = Category.objects.all()
-        data = []
-        for category in categories:
-            category_data = {
-                'id': category.id,
-                'title': category.title,
-                'image': category.image.url,
-                'detail1': {
-                    'name': category.detail1_name,
-                    'description': category.detail1_description,
-                },
-                'detail2': {
-                    'name': category.detail2_name,
-                    'description': category.detail2_description,
-                },
-                'detail3': {
-                    'name': category.detail3_name,
-                    'description': category.detail3_description,
-                },
-            }
-            data.append(category_data)
-        return JsonResponse(data, safe=False)
+        types = Type.objects.all()
+
+        categories_serializer = CategorySerializer(categories, many=True)
+        types_serializer = TypeSerializer(types, many=True)
+
+        data = {
+            "categories": categories_serializer.data,
+            "types": types_serializer.data,
+        }
+
+        return Response(data, status=status.HTTP_200_OK)
 
     def post(self, request):
         title = request.POST.get('title')
@@ -49,4 +45,4 @@ class CategoryListView(View):
             detail3_description=detail3_description
         )
 
-        return JsonResponse({'message': 'Category added'}, status=201)
+        return Response(status=status.HTTP_201_CREATED)
