@@ -1,8 +1,9 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Category, Containers, Location
-from .serializers import CategorySerializer, ContainersSerializer, LocationSerializer
+from .models import Category, Containers, EcoShop, TipsTricks
+from .serializers import CategorySerializer, ContainersSerializer, EcoShopSerializer, TipsTricksSerializer
+
 
 class CategoryListView(APIView):
     def get(self, request, *args, **kwargs):
@@ -49,6 +50,33 @@ class LocationListView(APIView):
 
     def post(self, request):
         serializer = LocationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class EcoShopListView(APIView):
+    def get(self, request, *args, **kwargs):
+        eco_shops = EcoShop.objects.all()
+        serializer = EcoShopSerializer(eco_shops, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = EcoShopSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class TipsTricksListView(APIView):
+    def get(self, request, *args, **kwargs):
+        tips_tricks = TipsTricks.objects.all()
+        serializer = TipsTricksSerializer(tips_tricks, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = TipsTricksSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

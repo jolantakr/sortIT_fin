@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Containers, Location
+from .models import Category, Containers, Location, EcoShop, TipsTricks
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -20,3 +20,15 @@ class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
         fields = ["id", "name", "contact", "street", "city", "state", "country", "latitude", "longitude"]
+
+
+class EcoShopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EcoShop
+        fields = ["id", "title", "image", "detail1_description"]
+
+
+class TipsTricksSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TipsTricks
+        fields = ["id", "title", "image", "detail1_description"]

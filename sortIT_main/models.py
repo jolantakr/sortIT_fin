@@ -46,3 +46,24 @@ class Location(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+
+class EcoShop(models.Model):
+    title = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    detail1_description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class TipsTricks(models.Model):
+    title = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    detail1_description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = "TipsTricks"
