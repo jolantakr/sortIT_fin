@@ -1,8 +1,22 @@
 from django.contrib import admin
-from .models import Type, Category
+from .models import Category, Containers, Location
 
-list_display = ('name', 'address', 'phone', 'working_time',)
-search_fields = ('name', 'address',)
 
-admin.site.register(Type)
-admin.site.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'image', 'detail1_name', 'detail2_name', 'detail3_name')
+    search_fields = ('title',)
+
+
+class ContainersAdmin(admin.ModelAdmin):
+    list_display = ('title', 'image', 'detail1_name', 'detail2_name', 'detail3_name')
+    search_fields = ('title',)
+
+
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'contact', 'street', 'city', 'country')
+    search_fields = ('name',)
+
+
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(Containers, ContainersAdmin)
+admin.site.register(Location, LocationAdmin)
