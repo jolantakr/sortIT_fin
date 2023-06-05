@@ -1,8 +1,8 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Category, Containers, EcoShop, TipsTricks
-from .serializers import CategorySerializer, ContainersSerializer, EcoShopSerializer, TipsTricksSerializer
+from .models import Category, Containers, EcoShop, TipsTricks, Location
+from .serializers import CategorySerializer, ContainersSerializer, EcoShopSerializer, TipsTricksSerializer, LocationSerializer
 
 
 class CategoryListView(APIView):
